@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=booking'
+      - 'POSTGRES_PASSWORD=root'
+      - 'POSTGRES_USER=postgres'
+    ports:
+      - '5432:5432'
