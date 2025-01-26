@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
