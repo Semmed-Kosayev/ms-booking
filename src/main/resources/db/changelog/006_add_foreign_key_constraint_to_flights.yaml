@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 006_add_foreign_key_constraint_to_flights
+      author: Saleh Samadli
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: flights
+            baseColumnNames: flight_details_id
+            referencedTableName: flight_details
+            referencedColumnNames: id
+            constraintName: fk_flights_flight_details
