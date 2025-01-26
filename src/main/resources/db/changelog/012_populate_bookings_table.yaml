@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 012_populate_bookings_table
+      author: Saleh Samadli
+      changes:
+        - loadData:
+            file: db/data/bookings.csv
+            tableName: bookings
+            separator: ","

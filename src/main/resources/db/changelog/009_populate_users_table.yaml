@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 009_populate_users_table
+      author: Saleh Samadli
+      changes:
+        - loadData:
+            file: db/data/users.csv
+            tableName: users
+            separator: ","
