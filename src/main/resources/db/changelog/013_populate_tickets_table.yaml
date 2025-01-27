@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 013_populate_tickets_table
+      author: Saleh Samadli
+      changes:
+        - loadData:
+            file: db/data/tickets.csv
+            tableName: tickets
+            separator: ","

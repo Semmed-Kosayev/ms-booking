@@ -1,0 +1,3 @@
+id,aircraft_model,departure_terminal,arrival_terminal,gate_number,max_baggage_weight,is_wifi_available,available_seats,max_seats,status,created_at,updated_at,created_by,updated_by
+1,Boeing 747,Terminal A,Terminal B,12,30,true,200,250,AVAILABLE,2025-01-01T12:00:00,2025-01-01T12:00:00,1,1
+2,Airbus A320,Terminal C,Terminal D,5,25,false,150,180,AVAILABLE,2025-01-01T12:30:00,2025-01-01T12:30:00,1,1

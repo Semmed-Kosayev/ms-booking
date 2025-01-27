@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 010_populate_flight_details_table
+      author: Saleh Samadli
+      changes:
+        - loadData:
+            file: db/data/flight_details.csv
+            tableName: flight_details
+            separator: ","

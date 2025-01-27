@@ -37,7 +37,7 @@ public class BookingEntity extends BaseEntity {
     private LocalDate flightDate;
 
     @Column(name = "seat_number", nullable = false)
-    private Integer seatNumber;
+    private String seatNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "class_type", nullable = false)
