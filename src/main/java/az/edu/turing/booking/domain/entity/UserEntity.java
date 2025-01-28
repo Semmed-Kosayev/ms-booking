@@ -2,11 +2,13 @@ package az.edu.turing.booking.domain.entity;
 
 import az.edu.turing.booking.model.enums.Nationality;
 import az.edu.turing.booking.model.enums.Role;
+import az.edu.turing.booking.model.enums.UserStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -57,6 +59,10 @@ public class UserEntity extends BaseEntity {
     @Column(name = "role", nullable = false)
     private Role role;
 
-    @OneToMany(mappedBy = "passenger", cascade = CascadeType.ALL)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private UserStatus status;
+
+    @OneToMany(mappedBy = "passenger", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BookingEntity> bookings;
 }

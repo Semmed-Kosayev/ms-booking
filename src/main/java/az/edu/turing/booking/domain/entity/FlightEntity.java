@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -58,11 +59,11 @@ public class FlightEntity extends BaseEntity {
     @Column(name = "arrival_city", nullable = false)
     private City arrivalCity;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "flight_details_id", nullable = false)
     private FlightDetailsEntity flightDetails;
 
-    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BookingEntity> bookings;
 
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)
