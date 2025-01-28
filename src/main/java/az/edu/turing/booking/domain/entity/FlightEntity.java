@@ -20,6 +20,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -68,4 +69,8 @@ public class FlightEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
+
+    public Duration getDuration() {
+        return Duration.between(this.departureTime, this.arrivalTime);
+    }
 }
