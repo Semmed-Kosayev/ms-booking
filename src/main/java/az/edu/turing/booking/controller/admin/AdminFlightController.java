@@ -1,7 +1,6 @@
 package az.edu.turing.booking.controller.admin;
 
 import az.edu.turing.booking.exception.UnauthorizedAccessException;
-import az.edu.turing.booking.model.dto.FlightDto;
 import az.edu.turing.booking.model.dto.request.UpdateFlightRequest;
 import az.edu.turing.booking.model.dto.response.UpdateFlightResponse;
 import az.edu.turing.booking.service.FlightService;
@@ -13,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,15 +35,5 @@ public class AdminFlightController {
 
         UpdateFlightResponse updatedFlight = service.updateFlight(id, updateFlightRequest);
         return ResponseEntity.ok(updatedFlight);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<FlightDto>> getAll(HttpServletRequest request) {
-        String role = request.getHeader("role");
-        if (!role.equalsIgnoreCase("ADMIN")) {
-            throw new UnauthorizedAccessException("Unauthorized access");
-        }
-        List<FlightDto> flights = flightService.getAllFlight();
-        return ResponseEntity.ok(flights);
     }
 }
