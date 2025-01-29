@@ -49,4 +49,17 @@ public class AdminBookingController {
 
         return ResponseEntity.ok(service.update(id, updateRequest));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseBookingDto> getById(@Min(1) @PathVariable long id, HttpServletRequest request) {
+        String role = request.getHeader("role");
+
+        if (!role.equalsIgnoreCase("admin")) {
+            throw new UnauthorizedAccessException("Unauthorized access");
+        }
+
+        ResponseBookingDto byId = service.getById(id);
+        return ResponseEntity.ok(byId);
+
+    }
 }
