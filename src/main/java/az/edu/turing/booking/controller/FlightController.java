@@ -1,10 +1,10 @@
 package az.edu.turing.booking.controller;
 
 import az.edu.turing.booking.model.dto.FlightDto;
+import az.edu.turing.booking.model.dto.response.UpdateFlightResponse;
 import az.edu.turing.booking.model.enums.City;
 import az.edu.turing.booking.service.FlightService;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,13 +13,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("api/v1/flights")
@@ -38,5 +34,10 @@ public class FlightController {
             @RequestParam(name = "ticketCount", required = false)
             int ticketCount) {
         return ResponseEntity.ok(flightService.getAllFlight(pageable, destination, date, ticketCount));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UpdateFlightResponse> getById(@Min(1) @PathVariable Long id) {
+        return ResponseEntity.ok(flightService.getById(id));
     }
 }

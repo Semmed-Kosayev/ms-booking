@@ -53,4 +53,10 @@ public class AdminBookingService {
 
         return bookingMapper.toResponseBookingDto(save);
     }
+
+    public ResponseBookingDto getById(long id) {
+        BookingEntity bookingEntity = bookingRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User with specified id not found"));
+        return bookingMapper.toResponseBookingDto(bookingEntity);
+    }
 }

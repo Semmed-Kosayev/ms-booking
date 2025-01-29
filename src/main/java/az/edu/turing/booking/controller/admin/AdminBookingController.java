@@ -3,6 +3,7 @@ package az.edu.turing.booking.controller.admin;
 import az.edu.turing.booking.exception.UnauthorizedAccessException;
 import az.edu.turing.booking.model.dto.request.BookingUpdateRequest;
 import az.edu.turing.booking.model.dto.response.ResponseBookingDto;
+import az.edu.turing.booking.model.dto.response.UserDto;
 import az.edu.turing.booking.service.admin.AdminBookingService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -48,5 +49,18 @@ public class AdminBookingController {
         }
 
         return ResponseEntity.ok(service.update(id, updateRequest));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseBookingDto> getById(@Min(1) @PathVariable long id, HttpServletRequest request) {
+        String role = request.getHeader("role");
+
+        if (!role.equalsIgnoreCase("admin")) {
+            throw new UnauthorizedAccessException("Unauthorized access");
+        }
+
+        ResponseBookingDto byId = service.getById(id);
+        return ResponseEntity.ok(byId);
+
     }
 }
