@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -35,7 +35,7 @@ public class BookingEntity extends BaseEntity {
     private Long id;
 
     @Column(name = "flight_date", nullable = false)
-    private LocalDate flightDate;
+    private LocalDateTime flightDate;
 
     @Column(name = "seat_number", nullable = false)
     private String seatNumber;
