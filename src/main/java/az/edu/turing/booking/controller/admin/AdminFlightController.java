@@ -28,7 +28,7 @@ public class AdminFlightController {
     private final AdminFlightService service;
 
     @PutMapping("/{id}")
-    public ResponseEntity<UpdateFlightResponse> updateFlight(
+    public ResponseEntity<UpdateFlightResponse> update(
             @Min(1) @PathVariable long id,
             @Valid @RequestBody UpdateFlightRequest updateFlightRequest,
             HttpServletRequest request
