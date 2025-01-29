@@ -14,7 +14,7 @@ databaseChangeLog:
                     primaryKey: true
               - column:
                   name: flight_date
-                  type: date
+                  type: timestamp
                   constraints:
                     nullable: false
               - column:
