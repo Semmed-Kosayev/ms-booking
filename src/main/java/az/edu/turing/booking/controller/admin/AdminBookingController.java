@@ -16,9 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/admin/bookings")
 public class AdminBookingController {
-
     private final AdminBookingService service;
-
     @GetMapping
     public ResponseEntity<List<ResponseBookingDto>> getAll(HttpServletRequest request) {
         String role = request.getHeader("role");
