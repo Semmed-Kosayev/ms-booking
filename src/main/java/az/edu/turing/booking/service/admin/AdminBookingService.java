@@ -56,7 +56,7 @@ public class AdminBookingService {
 
     public ResponseBookingDto getById(long id) {
         BookingEntity bookingEntity = bookingRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User with specified id not found"));
+                .orElseThrow(() -> new NotFoundException("Booking with specified id not found"));
         return bookingMapper.toResponseBookingDto(bookingEntity);
     }
 }
