@@ -5,6 +5,9 @@ import az.edu.turing.booking.domain.entity.UserEntity;
 import az.edu.turing.booking.domain.repository.UserRepository;
 import az.edu.turing.booking.exception.NotFoundException;
 import az.edu.turing.booking.mapper.UserMapper;
+import az.edu.turing.booking.model.dto.request.CreateUserRequest;
+import az.edu.turing.booking.model.dto.response.UserDto;
+import az.edu.turing.booking.model.enums.Role;
 import az.edu.turing.booking.model.enums.UserStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,4 +29,21 @@ public class UserService {
         userRepository.save(userById);
     }
 
+    @Transactional
+    public UserDto create(CreateUserRequest request) {
+        UserEntity userEntity = new UserEntity();
+
+        userEntity.setFirstName(request.firstName());
+        userEntity.setLastName(request.lastName());
+        userEntity.setEmail(request.email());
+        userEntity.setPhoneNumber(request.phoneNumber());
+        userEntity.setDateOfBirth(request.dateOfBirth());
+        userEntity.setNationality(request.nationality());
+        userEntity.setRole(Role.USER);
+        userEntity.setStatus(UserStatus.ACTIVE);
+
+        UserEntity savedUser = userRepository.save(userEntity);
+
+        return userMapper.toUserDto(savedUser);
+    }
 }
