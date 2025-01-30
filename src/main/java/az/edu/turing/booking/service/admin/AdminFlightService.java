@@ -3,8 +3,13 @@ package az.edu.turing.booking.service.admin;
 import az.edu.turing.booking.domain.entity.FlightDetailsEntity;
 import az.edu.turing.booking.domain.entity.FlightEntity;
 import az.edu.turing.booking.domain.repository.FlightRepository;
+import az.edu.turing.booking.exception.AlreadyExistsException;
+import az.edu.turing.booking.exception.InvalidException;
+import az.edu.turing.booking.exception.InvalidFlightDateException;
 import az.edu.turing.booking.exception.NotFoundException;
 import az.edu.turing.booking.mapper.FlightMapper;
+import az.edu.turing.booking.model.dto.FlightDto;
+import az.edu.turing.booking.model.dto.request.CreateFlightRequest;
 import az.edu.turing.booking.model.dto.request.UpdateFlightRequest;
 import az.edu.turing.booking.model.dto.response.UpdateFlightResponse;
 import az.edu.turing.booking.model.enums.FlightStatus;
@@ -74,5 +79,28 @@ public class AdminFlightService {
 
         repository.save(flightEntity);
 
+    }
+
+    @Transactional
+    public FlightDto createFlight(CreateFlightRequest createFlightRequest) {
+        if (createFlightRequest.getDepartureTime().isBefore(LocalDateTime.now())) {
+            throw new InvalidFlightDateException("Flight departure time cannot be in the past.");
+        }
+        boolean flightExists = repository.existsByDepartureTimeAndDepartureAirportAndArrivalAirportAndAirlineName(
+                createFlightRequest.getDepartureTime(),
+                createFlightRequest.getDepartureAirport(),
+                createFlightRequest.getArrivalAirport(),
+                createFlightRequest.getAirlineName()
+        );
+        if (flightExists) {
+            throw new AlreadyExistsException("A flight with the same details already exists.");
+        }
+        if (createFlightRequest.getMaxSeats() <= 0) {
+            throw new InvalidException("Seat capacity must be greater than zero.");
+        }
+        FlightEntity flightEntity = mapper.toEntity(createFlightRequest);
+
+        FlightEntity savedFlight = repository.save(flightEntity);
+        return mapper.toFlightDto(savedFlight);
     }
 }

@@ -1,11 +1,14 @@
 package az.edu.turing.booking.controller;
 
+import az.edu.turing.booking.model.dto.BookingDto;
 import az.edu.turing.booking.model.dto.request.CreateBookingRequest;
 import az.edu.turing.booking.model.dto.response.ResponseBookingDto;
 import az.edu.turing.booking.service.BookingService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -29,6 +32,15 @@ public class BookingController {
     @GetMapping("/{id}")
     public ResponseEntity<ResponseBookingDto> getById(@Min(1) @PathVariable long id) {
         return ResponseEntity.ok(service.getById(id));
+    }
+
+    @GetMapping("/passenger/{passengerId}")
+    public ResponseEntity<Page<BookingDto>> getAllByPassengerId(
+            @PathVariable Long passengerId,
+            Pageable pageable
+    ) {
+        Page<BookingDto> bookings = service.getAllByPassengerId(passengerId, pageable);
+        return ResponseEntity.ok(bookings);
     }
 
     @DeleteMapping("/{id}")

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface FlightRepository extends JpaRepository<FlightEntity, Long> {
@@ -21,4 +22,6 @@ public interface FlightRepository extends JpaRepository<FlightEntity, Long> {
                                      @Param("date") LocalDate date,
                                      @Param("passengerCount") int passengerCount);
 
+    boolean existsByDepartureTimeAndDepartureAirportAndArrivalAirportAndAirlineName
+            (LocalDateTime departureTime, String departureAirport, String arrivalAirport, String airlineName);
 }

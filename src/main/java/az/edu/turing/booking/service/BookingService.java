@@ -8,10 +8,13 @@ import az.edu.turing.booking.domain.repository.FlightRepository;
 import az.edu.turing.booking.domain.repository.UserRepository;
 import az.edu.turing.booking.exception.NotFoundException;
 import az.edu.turing.booking.mapper.BookingMapper;
+import az.edu.turing.booking.model.dto.BookingDto;
 import az.edu.turing.booking.model.dto.request.CreateBookingRequest;
 import az.edu.turing.booking.model.dto.response.ResponseBookingDto;
 import az.edu.turing.booking.model.enums.BookingStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +24,6 @@ import java.time.LocalDateTime;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class BookingService {
-
     private final BookingRepository bookingRepository;
     private final BookingMapper bookingMapper;
     private final FlightRepository flightRepository;
@@ -32,6 +34,11 @@ public class BookingService {
                 .orElseThrow(() -> new NotFoundException("Booking with specified id not found"));
 
         return bookingMapper.toResponseBookingDto(bookingById);
+    }
+
+    public Page<BookingDto> getAllByPassengerId(Long passengerId, Pageable pageable) {
+        return bookingRepository.findAllByPassengerId(passengerId, pageable)
+                .map(bookingMapper::toBookingDto);
     }
 
     @Transactional

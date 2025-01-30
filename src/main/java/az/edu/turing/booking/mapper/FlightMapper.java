@@ -2,6 +2,7 @@ package az.edu.turing.booking.mapper;
 
 import az.edu.turing.booking.domain.entity.FlightEntity;
 import az.edu.turing.booking.model.dto.FlightDto;
+import az.edu.turing.booking.model.dto.request.CreateFlightRequest;
 import az.edu.turing.booking.model.dto.response.UpdateFlightResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -38,4 +39,5 @@ public interface FlightMapper {
             @Mapping(source = "arrivalCity", target = "arrivalCity")
     })
     FlightDto toFlightDto(FlightEntity flightEntity);
+    FlightEntity toEntity(CreateFlightRequest request);
 }
