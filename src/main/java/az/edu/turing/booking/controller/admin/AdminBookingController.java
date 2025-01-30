@@ -3,6 +3,7 @@ package az.edu.turing.booking.controller.admin;
 import az.edu.turing.booking.exception.UnauthorizedAccessException;
 import az.edu.turing.booking.model.dto.request.BookingUpdateRequest;
 import az.edu.turing.booking.model.dto.response.ResponseBookingDto;
+import az.edu.turing.booking.model.dto.response.UserDto;
 import az.edu.turing.booking.service.admin.AdminBookingService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
