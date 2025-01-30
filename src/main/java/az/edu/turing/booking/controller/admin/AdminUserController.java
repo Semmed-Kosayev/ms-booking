@@ -61,7 +61,6 @@ public class AdminUserController {
         if (!role.equalsIgnoreCase("admin")) {
             throw new UnauthorizedAccessException("Unauthorized access");
         }
-
         UserDto updatedUser = service.update(id, updatedUserDto);
         return ResponseEntity.ok(updatedUser);
     }

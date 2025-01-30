@@ -1,6 +1,8 @@
 package az.edu.turing.booking.controller.admin;
 
 import az.edu.turing.booking.exception.UnauthorizedAccessException;
+import az.edu.turing.booking.model.dto.FlightDto;
+import az.edu.turing.booking.model.dto.request.CreateFlightRequest;
 import az.edu.turing.booking.model.dto.request.UpdateFlightRequest;
 import az.edu.turing.booking.model.dto.response.UpdateFlightResponse;
 import az.edu.turing.booking.service.admin.AdminFlightService;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +44,19 @@ public class AdminFlightController {
 
         UpdateFlightResponse updatedFlight = service.updateFlight(id, updateFlightRequest);
         return ResponseEntity.ok(updatedFlight);
+    }
+
+    @PostMapping()
+    public ResponseEntity<FlightDto> create(
+            @Valid @RequestBody CreateFlightRequest createFlightRequest,
+            HttpServletRequest request
+    ) {
+        String role = request.getHeader("role");
+
+        if (!role.equalsIgnoreCase("admin")) {
+            throw new UnauthorizedAccessException("Unauthorized access");
+        }
+        return ResponseEntity.ok(service.createFlight(createFlightRequest));
     }
 
     @DeleteMapping("/{id}")
