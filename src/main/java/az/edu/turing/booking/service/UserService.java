@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -41,9 +43,13 @@ public class UserService {
         userEntity.setNationality(request.nationality());
         userEntity.setRole(Role.USER);
         userEntity.setStatus(UserStatus.ACTIVE);
+        userEntity.setCreatedAt(LocalDateTime.now());
+        userEntity.setUpdatedAt(LocalDateTime.now());
+        userEntity.setCreatedBy(1L);
+        userEntity.setUpdatedBy(1L);
 
-        UserEntity savedUser = userRepository.save(userEntity);
+        UserEntity saved = userRepository.save(userEntity);
 
-        return userMapper.toUserDto(savedUser);
+        return userMapper.toUserDto(saved);
     }
 }

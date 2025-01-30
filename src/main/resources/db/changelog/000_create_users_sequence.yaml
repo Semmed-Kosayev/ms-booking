@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-users-sequence
+      author: Saleh Samadli
+      changes:
+        - createSequence:
+            sequenceName: users_id_seq
+            startValue: 3
+            incrementBy: 1
+            minValue: 1
+            cycle: false
