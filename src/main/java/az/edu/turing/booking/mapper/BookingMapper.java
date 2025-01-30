@@ -2,6 +2,7 @@ package az.edu.turing.booking.mapper;
 
 import az.edu.turing.booking.domain.entity.BookingEntity;
 import az.edu.turing.booking.domain.entity.FlightEntity;
+import az.edu.turing.booking.model.dto.BookingDto;
 import az.edu.turing.booking.model.dto.response.ResponseBookingDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -36,4 +37,8 @@ public interface BookingMapper {
     }
 
     List<ResponseBookingDto> toResponseBookingDtoList(List<BookingEntity> bookingEntities);
+
+    @Mapping(source = "passenger.id", target = "passengerId")
+    @Mapping(source = "flight.id", target = "flightId")
+    BookingDto toBookingDto(BookingEntity bookingEntity);
 }
