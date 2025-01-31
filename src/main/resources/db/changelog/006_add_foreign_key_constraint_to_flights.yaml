@@ -8,4 +8,4 @@ databaseChangeLog:
             baseColumnNames: flight_details_id
             referencedTableName: flight_details
             referencedColumnNames: id
-            constraintName: fk_flights_flight_details
+            constraintName: fk_flight_details

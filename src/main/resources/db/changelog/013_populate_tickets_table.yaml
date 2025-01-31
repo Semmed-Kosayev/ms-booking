@@ -3,7 +3,13 @@ databaseChangeLog:
       id: 013_populate_tickets_table
       author: Saleh Samadli
       changes:
-        - loadData:
-            file: db/data/tickets.csv
+        - insert:
             tableName: tickets
-            separator: ","
+            columns:
+              - column: { name: type, value: 'ECONOMY' }
+              - column: { name: price, valueNumeric: 500 }
+              - column: { name: flight_id, valueNumeric: 1 }
+              - column: { name: created_at, valueComputed: 'CURRENT_TIMESTAMP' }
+              - column: { name: updated_at, valueComputed: 'CURRENT_TIMESTAMP' }
+              - column: { name: created_by, valueNumeric: 1 }
+              - column: { name: updated_by, valueNumeric: 1 }

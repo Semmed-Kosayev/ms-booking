@@ -3,7 +3,18 @@ databaseChangeLog:
       id: 011_populate_flights_table
       author: Saleh Samadli
       changes:
-        - loadData:
-            file: db/data/flights.csv
+        - insert:
             tableName: flights
-            separator: ","
+            columns:
+              - column: { name: airline_name, value: 'Example Airlines' }
+              - column: { name: departure_time, valueDate: '2024-06-01T08:00:00' }
+              - column: { name: arrival_time, valueDate: '2024-06-01T12:00:00' }
+              - column: { name: departure_airport, value: 'JFK' }
+              - column: { name: arrival_airport, value: 'LHR' }
+              - column: { name: departure_city, value: 'NEW_YORK' }
+              - column: { name: arrival_city, value: 'LONDON' }
+              - column: { name: flight_details_id, valueNumeric: 1 }
+              - column: { name: created_at, valueComputed: 'CURRENT_TIMESTAMP' }
+              - column: { name: updated_at, valueComputed: 'CURRENT_TIMESTAMP' }
+              - column: { name: created_by, valueNumeric: 1 }
+              - column: { name: updated_by, valueNumeric: 1 }

@@ -1,3 +1,0 @@
-id,flight_date,seat_number,class_type,status,passenger_id,flight_id,created_at,updated_at,created_by,updated_by
-1,2025-02-01T12:00:00,12A,ECONOMY,CONFIRMED,1,1,2025-01-01T15:00:00,2025-01-01T15:00:00,1,1
-2,2025-02-02T12:04:00,14B,BUSINESS,CONFIRMED,2,2,2025-01-01T15:30:00,2025-01-01T15:30:00,1,1
