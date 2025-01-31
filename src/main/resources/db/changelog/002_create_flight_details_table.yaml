@@ -6,74 +6,17 @@ databaseChangeLog:
         - createTable:
             tableName: flight_details
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: aircraft_model
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: departure_terminal
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: arrival_terminal
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: gate_number
-                  type: int
-                  constraints:
-                    nullable: false
-              - column:
-                  name: max_baggage_weight
-                  type: int
-                  constraints:
-                    nullable: false
-              - column:
-                  name: is_wifi_available
-                  type: boolean
-                  constraints:
-                    nullable: false
-              - column:
-                  name: available_seats
-                  type: int
-                  constraints:
-                    nullable: false
-              - column:
-                  name: max_seats
-                  type: int
-                  constraints:
-                    nullable: false
-              - column:
-                  name: status
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: created_at
-                  type: timestamp
-                  constraints:
-                    nullable: false
-              - column:
-                  name: updated_at
-                  type: timestamp
-                  constraints:
-                    nullable: false
-              - column:
-                  name: created_by
-                  type: bigint
-                  constraints:
-                    nullable: false
-              - column:
-                  name: updated_by
-                  type: bigint
-                  constraints:
-                    nullable: false
+              - column: { name: id, type: BIGINT, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
+              - column: { name: aircraft_model, type: VARCHAR(255), constraints: { nullable: false } }
+              - column: { name: departure_terminal, type: VARCHAR(255), constraints: { nullable: false } }
+              - column: { name: arrival_terminal, type: VARCHAR(255), constraints: { nullable: false } }
+              - column: { name: gate_number, type: INT, constraints: { nullable: false } }
+              - column: { name: max_baggage_weight, type: INT, constraints: { nullable: false } }
+              - column: { name: is_wifi_available, type: BOOLEAN, constraints: { nullable: false } }
+              - column: { name: available_seats, type: INT, constraints: { nullable: false } }
+              - column: { name: max_seats, type: INT, constraints: { nullable: false } }
+              - column: { name: status, type: VARCHAR(255), constraints: { nullable: false } }
+              - column: { name: created_at, type: TIMESTAMP, defaultValueComputed: CURRENT_TIMESTAMP, constraints: { nullable: false } }
+              - column: { name: updated_at, type: TIMESTAMP, defaultValueComputed: CURRENT_TIMESTAMP, constraints: { nullable: false } }
+              - column: { name: created_by, type: BIGINT }
+              - column: { name: updated_by, type: BIGINT }

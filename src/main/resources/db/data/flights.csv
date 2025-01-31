@@ -1,3 +1,0 @@
-id,airline_name,departure_time,arrival_time,departure_airport,arrival_airport,departure_city,arrival_city,flight_details_id,created_at,updated_at,created_by,updated_by
-1,Delta Airlines,2025-02-01T08:00:00,2025-02-01T12:00:00,JFK,LAX,NEW_YORK,PARIS,1,2025-01-01T13:00:00,2025-01-01T13:00:00,1,1
-2,American Airlines,2025-02-02T09:00:00,2025-02-02T13:30:00,LAX,ORD,LONDON,BAKU,2,2025-01-01T14:00:00,2025-01-01T14:00:00,1,1

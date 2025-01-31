@@ -3,7 +3,18 @@ databaseChangeLog:
       id: 009_populate_users_table
       author: Saleh Samadli
       changes:
-        - loadData:
-            file: db/data/users.csv
+        - insert:
             tableName: users
-            separator: ","
+            columns:
+              - column: { name: first_name, value: 'John' }
+              - column: { name: last_name, value: 'Doe' }
+              - column: { name: email, value: 'john.doe@example.com' }
+              - column: { name: phone_number, value: '1234567890' }
+              - column: { name: date_of_birth, valueDate: '1990-05-15' }
+              - column: { name: nationality, value: 'USA' }
+              - column: { name: role, value: 'ADMIN' }
+              - column: { name: status, value: 'ACTIVE' }
+              - column: { name: created_at, valueComputed: 'CURRENT_TIMESTAMP' }
+              - column: { name: updated_at, valueComputed: 'CURRENT_TIMESTAMP' }
+              - column: { name: created_by, valueNumeric: 1 }
+              - column: { name: updated_by, valueNumeric: 1 }

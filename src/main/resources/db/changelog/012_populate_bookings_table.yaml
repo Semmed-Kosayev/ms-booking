@@ -3,7 +3,16 @@ databaseChangeLog:
       id: 012_populate_bookings_table
       author: Saleh Samadli
       changes:
-        - loadData:
-            file: db/data/bookings.csv
+        - insert:
             tableName: bookings
-            separator: ","
+            columns:
+              - column: { name: flight_date, valueDate: '2024-06-01T08:00:00' }
+              - column: { name: seat_number, value: '12A' }
+              - column: { name: class_type, value: 'ECONOMY' }
+              - column: { name: status, value: 'CONFIRMED' }
+              - column: { name: passenger_id, valueNumeric: 1 }
+              - column: { name: flight_id, valueNumeric: 1 }
+              - column: { name: created_at, valueComputed: 'CURRENT_TIMESTAMP' }
+              - column: { name: updated_at, valueComputed: 'CURRENT_TIMESTAMP' }
+              - column: { name: created_by, valueNumeric: 1 }
+              - column: { name: updated_by, valueNumeric: 1 }
