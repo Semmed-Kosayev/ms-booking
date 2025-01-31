@@ -17,12 +17,15 @@ public record BookingUpdateRequest(
         BookingStatus status,
 
         @Min(1)
-        long flightId,
+        @NotNull
+        Long flightId,
 
         @Min(1)
-        long passengerId,
+        @NotNull
+        Long passengerId,
 
         @Min(1)
-        long adminId
+        @NotNull
+        Long adminId
 ) {
 }

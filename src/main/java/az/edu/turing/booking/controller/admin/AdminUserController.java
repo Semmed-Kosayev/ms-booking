@@ -7,6 +7,7 @@ import az.edu.turing.booking.service.admin.AdminUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class AdminUserController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@Min(1) @PathVariable long id, HttpServletRequest request) {
+    public void delete(@Min(1) @NotNull @PathVariable Long id, HttpServletRequest request) {
         String role = request.getHeader("role");
         if (!role.equalsIgnoreCase("admin")) {
             throw new UnauthorizedAccessException("Unauthorized access");
@@ -52,7 +53,7 @@ public class AdminUserController {
 
     @PutMapping("/passenger/{id}")
     public ResponseEntity<UserDto> update(
-            @Min(1) @PathVariable Long id,
+            @Min(1) @NotNull @PathVariable Long id,
             @Valid @RequestBody UpdateUserDto updatedUserDto,
             HttpServletRequest request
     ) {
@@ -66,7 +67,7 @@ public class AdminUserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getById(@Min(1) @PathVariable long id, HttpServletRequest request) {
+    public ResponseEntity<UserDto> getById(@Min(1) @NotNull @PathVariable Long id, HttpServletRequest request) {
         String role = request.getHeader("role");
 
         if (!role.equalsIgnoreCase("admin")) {

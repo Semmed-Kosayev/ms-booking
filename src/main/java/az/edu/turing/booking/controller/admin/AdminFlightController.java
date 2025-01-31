@@ -9,6 +9,7 @@ import az.edu.turing.booking.service.admin.AdminFlightService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class AdminFlightController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UpdateFlightResponse> update(
-            @Min(1) @PathVariable long id,
+            @Min(1) @NotNull @PathVariable Long id,
             @Valid @RequestBody UpdateFlightRequest updateFlightRequest,
             HttpServletRequest request
     ) {
@@ -46,7 +47,7 @@ public class AdminFlightController {
         return ResponseEntity.ok(updatedFlight);
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<FlightDto> create(
             @Valid @RequestBody CreateFlightRequest createFlightRequest,
             HttpServletRequest request
@@ -61,7 +62,7 @@ public class AdminFlightController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@Min(1) @PathVariable long id, HttpServletRequest request) {
+    public void delete(@Min(1) @NotNull @PathVariable Long id, HttpServletRequest request) {
 
         String role = request.getHeader("role");
 

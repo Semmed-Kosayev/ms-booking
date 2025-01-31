@@ -4,6 +4,7 @@ import az.edu.turing.booking.model.dto.FlightDto;
 import az.edu.turing.booking.model.enums.City;
 import az.edu.turing.booking.service.FlightService;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,12 +36,12 @@ public class FlightController {
             @RequestParam(name = "date", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             @RequestParam(name = "ticketCount", required = false)
-            int ticketCount) {
+            @NotNull Integer ticketCount) {
         return ResponseEntity.ok(flightService.getAllFlight(pageable, destination, date, ticketCount));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FlightDto> getById(@Min(1) @PathVariable Long id) {
+    public ResponseEntity<FlightDto> getById(@Min(1) @NotNull @PathVariable Long id) {
         return ResponseEntity.ok(flightService.getById(id));
     }
 }

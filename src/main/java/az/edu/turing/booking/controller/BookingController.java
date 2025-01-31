@@ -6,6 +6,7 @@ import az.edu.turing.booking.model.dto.response.ResponseBookingDto;
 import az.edu.turing.booking.service.BookingService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +31,7 @@ public class BookingController {
     private final BookingService service;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseBookingDto> getById(@Min(1) @PathVariable long id) {
+    public ResponseEntity<ResponseBookingDto> getById(@Min(1) @NotNull @PathVariable Long id) {
         return ResponseEntity.ok(service.getById(id));
     }
 
@@ -45,7 +46,7 @@ public class BookingController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@Min(1) @PathVariable long id) {
+    public void delete(@Min(1) @NotNull @PathVariable Long id) {
         service.deleteById(id);
     }
 

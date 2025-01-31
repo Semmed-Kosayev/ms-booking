@@ -5,6 +5,7 @@ import az.edu.turing.booking.model.dto.response.UserDto;
 import az.edu.turing.booking.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@Min(1) @PathVariable long id) {
+    public void delete(@Min(1) @NotNull @PathVariable Long id) {
         service.deleteById(id);
     }
 }

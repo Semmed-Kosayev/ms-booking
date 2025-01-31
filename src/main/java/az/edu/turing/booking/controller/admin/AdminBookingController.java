@@ -9,6 +9,7 @@ import az.edu.turing.booking.service.admin.AdminBookingService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,7 +41,7 @@ public class AdminBookingController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ResponseBookingDto> update(
-            @Min(1) @PathVariable long id,
+            @Min(1) @NotNull @PathVariable Long id,
             HttpServletRequest request,
             @Valid BookingUpdateRequest updateRequest
     ) {
@@ -54,7 +55,7 @@ public class AdminBookingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseBookingDto> getById(@Min(1) @PathVariable long id, HttpServletRequest request) {
+    public ResponseEntity<ResponseBookingDto> getById(@Min(1) @NotNull @PathVariable Long id, HttpServletRequest request) {
         String role = request.getHeader("role");
 
         if (!role.equalsIgnoreCase("admin")) {
@@ -67,7 +68,7 @@ public class AdminBookingController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> delete(@Min(1) @PathVariable long id, HttpServletRequest request) {
+    public ResponseEntity<Void> delete(@Min(1) @NotNull @PathVariable Long id, HttpServletRequest request) {
         String role = request.getHeader("role");
         if (!role.equalsIgnoreCase("admin")) {
             throw new UnauthorizedAccessException("Unauthorized access");
