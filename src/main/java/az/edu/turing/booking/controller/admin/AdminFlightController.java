@@ -1,12 +1,10 @@
 package az.edu.turing.booking.controller.admin;
 
-import az.edu.turing.booking.exception.UnauthorizedAccessException;
-import az.edu.turing.booking.model.dto.FlightDto;
 import az.edu.turing.booking.model.dto.request.CreateFlightRequest;
 import az.edu.turing.booking.model.dto.request.UpdateFlightRequest;
+import az.edu.turing.booking.model.dto.response.FlightDto;
 import az.edu.turing.booking.model.dto.response.UpdateFlightResponse;
 import az.edu.turing.booking.service.admin.AdminFlightService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,41 +33,26 @@ public class AdminFlightController {
     @PutMapping("/{id}")
     public ResponseEntity<UpdateFlightResponse> update(
             @Min(1) @NotNull @PathVariable Long id,
-            @Valid @RequestBody UpdateFlightRequest updateFlightRequest,
-            HttpServletRequest request
+            @Valid @RequestBody UpdateFlightRequest updateFlightRequest
     ) {
-        String role = request.getHeader("role");
-
-        if (!role.equalsIgnoreCase("admin")) {
-            throw new UnauthorizedAccessException("Unauthorized access");
-        }
-
-        UpdateFlightResponse updatedFlight = service.updateFlight(id, updateFlightRequest);
-        return ResponseEntity.ok(updatedFlight);
+        return ResponseEntity.ok(service.updateFlight(id, updateFlightRequest));
     }
 
     @PostMapping
     public ResponseEntity<FlightDto> create(
-            @Valid @RequestBody CreateFlightRequest createFlightRequest,
-            HttpServletRequest request
+            @Valid @RequestBody CreateFlightRequest createFlightRequest
     ) {
-        String role = request.getHeader("role");
-
-        if (!role.equalsIgnoreCase("admin")) {
-            throw new UnauthorizedAccessException("Unauthorized access");
-        }
         return ResponseEntity.ok(service.createFlight(createFlightRequest));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@Min(1) @NotNull @PathVariable Long id, HttpServletRequest request) {
-
-        String role = request.getHeader("role");
-
-        if (!role.equalsIgnoreCase("admin")) {
-            throw new UnauthorizedAccessException("Unauthorized access");
-        }
-        service.deleteById(id);
+    public void delete(
+            @Min(1) @NotNull @PathVariable("id")
+            Long flightId,
+            @Min(1) @NotNull @RequestHeader("Admin-Id")
+            Long adminId
+    ) {
+        service.deleteById(flightId, adminId);
     }
 }
