@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 public record UpdateFlightRequest(
 
-        @Min(1) long adminId,
+        @Min(1) @NotNull Long adminId,
 
         @NotBlank String airlineName,
         @NotNull LocalDateTime departureTime,

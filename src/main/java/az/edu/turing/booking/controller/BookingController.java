@@ -1,14 +1,17 @@
 package az.edu.turing.booking.controller;
 
-import az.edu.turing.booking.model.dto.BookingDto;
 import az.edu.turing.booking.model.dto.request.CreateBookingRequest;
-import az.edu.turing.booking.model.dto.response.ResponseBookingDto;
+import az.edu.turing.booking.model.dto.response.BookingDto;
 import az.edu.turing.booking.service.BookingService;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -30,28 +33,29 @@ public class BookingController {
     private final BookingService service;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseBookingDto> getById(@Min(1) @PathVariable long id) {
+    public ResponseEntity<BookingDto> getById(@Min(1) @NotNull @PathVariable Long id) {
         return ResponseEntity.ok(service.getById(id));
     }
 
     @GetMapping("/passenger/{passengerId}")
     public ResponseEntity<Page<BookingDto>> getAllByPassengerId(
-            @PathVariable Long passengerId,
+            @Min(1) @NotNull @PathVariable
+            Long passengerId,
+            @Parameter(hidden = true)
+            @PageableDefault(size = 5, sort = "flightDate", direction = Sort.Direction.ASC)
             Pageable pageable
     ) {
-        Page<BookingDto> bookings = service.getAllByPassengerId(passengerId, pageable);
-        return ResponseEntity.ok(bookings);
+        return ResponseEntity.ok(service.getAllByPassengerId(passengerId, pageable));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@Min(1) @PathVariable long id) {
+    public void delete(@Min(1) @NotNull @PathVariable Long id) {
         service.deleteById(id);
     }
 
     @PostMapping
-    public ResponseEntity<ResponseBookingDto> save(@RequestBody @Valid CreateBookingRequest request) {
-        ResponseBookingDto responseBookingDto = service.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseBookingDto);
+    public ResponseEntity<BookingDto> save(@RequestBody @Valid CreateBookingRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
 }

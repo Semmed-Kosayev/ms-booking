@@ -6,7 +6,7 @@ import az.edu.turing.booking.model.enums.ClassType;
 
 import java.time.LocalDateTime;
 
-public record ResponseBookingDto(
+public record BookingDto(
         Long id,
         String airlineName,
         City departureCity,

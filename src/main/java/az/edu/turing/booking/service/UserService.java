@@ -33,23 +33,8 @@ public class UserService {
 
     @Transactional
     public UserDto create(CreateUserRequest request) {
-        UserEntity userEntity = new UserEntity();
+        UserEntity savedUser = userRepository.save(userMapper.toUserEntity(request));
 
-        userEntity.setFirstName(request.firstName());
-        userEntity.setLastName(request.lastName());
-        userEntity.setEmail(request.email());
-        userEntity.setPhoneNumber(request.phoneNumber());
-        userEntity.setDateOfBirth(request.dateOfBirth());
-        userEntity.setNationality(request.nationality());
-        userEntity.setRole(Role.USER);
-        userEntity.setStatus(UserStatus.ACTIVE);
-        userEntity.setCreatedAt(LocalDateTime.now());
-        userEntity.setUpdatedAt(LocalDateTime.now());
-        userEntity.setCreatedBy(1L);
-        userEntity.setUpdatedBy(1L);
-
-        UserEntity saved = userRepository.save(userEntity);
-
-        return userMapper.toUserDto(saved);
+        return userMapper.toUserDto(savedUser);
     }
 }

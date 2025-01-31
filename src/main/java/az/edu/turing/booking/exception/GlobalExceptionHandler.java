@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
                 .build());
     }
 
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler(UnauthorizedAccessException.class)
     public ResponseEntity<GlobalResponse> unauthorizedAccessExceptionHandler(UnauthorizedAccessException exception) {
         exceptionLog(exception);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(GlobalResponse.builder()

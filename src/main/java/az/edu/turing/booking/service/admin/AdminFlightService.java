@@ -1,16 +1,16 @@
 package az.edu.turing.booking.service.admin;
 
-import az.edu.turing.booking.domain.entity.FlightDetailsEntity;
 import az.edu.turing.booking.domain.entity.FlightEntity;
 import az.edu.turing.booking.domain.repository.FlightRepository;
+import az.edu.turing.booking.domain.repository.UserRepository;
 import az.edu.turing.booking.exception.AlreadyExistsException;
-import az.edu.turing.booking.exception.InvalidException;
 import az.edu.turing.booking.exception.InvalidFlightDateException;
 import az.edu.turing.booking.exception.NotFoundException;
+import az.edu.turing.booking.exception.UnauthorizedAccessException;
 import az.edu.turing.booking.mapper.FlightMapper;
-import az.edu.turing.booking.model.dto.FlightDto;
 import az.edu.turing.booking.model.dto.request.CreateFlightRequest;
 import az.edu.turing.booking.model.dto.request.UpdateFlightRequest;
+import az.edu.turing.booking.model.dto.response.FlightDto;
 import az.edu.turing.booking.model.dto.response.UpdateFlightResponse;
 import az.edu.turing.booking.model.enums.FlightStatus;
 import lombok.RequiredArgsConstructor;
@@ -24,69 +24,42 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class AdminFlightService {
 
-    private final FlightRepository repository;
+    private final FlightRepository flightRepository;
+    private final UserRepository userRepository;
     private final FlightMapper mapper;
 
     @Transactional
-    public UpdateFlightResponse updateFlight(long id, UpdateFlightRequest updateFlightRequest) {
-        FlightEntity existingFlight = repository.findById(id)
+    public UpdateFlightResponse updateFlight(long flightId, UpdateFlightRequest updateFlightRequest) {
+        FlightEntity existingFlight = flightRepository.findById(flightId)
                 .orElseThrow(() -> new NotFoundException("Flight with specified id not found"));
 
-        existingFlight = updateFlightEntity(existingFlight, updateFlightRequest);
-        FlightEntity updatedFlight = repository.save(existingFlight);
+        checkAdminExistence(updateFlightRequest.adminId());
 
-        return mapper.toFlightResponseDto(updatedFlight);
-    }
+        FlightEntity updatedFlight = mapper.updateFlightEntityFromRequest(existingFlight, updateFlightRequest);
 
-    private FlightEntity updateFlightEntity(FlightEntity existingFlight, UpdateFlightRequest updateFlightRequest) {
-        existingFlight.setUpdatedBy(updateFlightRequest.adminId());
-        existingFlight.setUpdatedAt(LocalDateTime.now());
-
-        existingFlight.setAirlineName(updateFlightRequest.airlineName());
-        existingFlight.setDepartureTime(updateFlightRequest.departureTime());
-        existingFlight.setArrivalTime(updateFlightRequest.arrivalTime());
-        existingFlight.setDepartureAirport(updateFlightRequest.departureAirport());
-        existingFlight.setArrivalAirport(updateFlightRequest.arrivalAirport());
-        existingFlight.setDepartureCity(updateFlightRequest.departureCity());
-        existingFlight.setArrivalCity(updateFlightRequest.arrivalCity());
-
-        FlightDetailsEntity flightDetails = existingFlight.getFlightDetails();
-        if (flightDetails == null) {
-            flightDetails = new FlightDetailsEntity();
-        }
-        flightDetails.setAircraftModel(updateFlightRequest.aircraftModel());
-        flightDetails.setDepartureTerminal(updateFlightRequest.departureTerminal());
-        flightDetails.setArrivalTerminal(updateFlightRequest.arrivalTerminal());
-        flightDetails.setGateNumber(updateFlightRequest.gateNumber());
-        flightDetails.setMaxBaggageWeight(updateFlightRequest.maxBaggageWeight());
-        flightDetails.setIsWifiAvailable(updateFlightRequest.isWifiAvailable());
-        flightDetails.setAvailableSeats(updateFlightRequest.availableSeats());
-        flightDetails.setMaxSeats(updateFlightRequest.maxSeats());
-        flightDetails.setStatus(updateFlightRequest.flightStatus());
-
-        existingFlight.setFlightDetails(flightDetails);
-
-        return existingFlight;
+        return mapper.toFlightResponseDto(flightRepository.save(updatedFlight));
     }
 
     @Transactional
-    public void deleteById(long id) {
+    public void deleteById(Long flightId, Long adminId) {
+        checkAdminExistence(adminId);
 
-        FlightEntity flightEntity = repository.findById(id)
+        FlightEntity flightEntity = flightRepository.findById(flightId)
                 .orElseThrow(() -> new NotFoundException("Flight not found"));
 
         flightEntity.getFlightDetails().setStatus(FlightStatus.CANCELLED);
 
-        repository.save(flightEntity);
-
+        flightRepository.save(flightEntity);
     }
 
     @Transactional
     public FlightDto createFlight(CreateFlightRequest createFlightRequest) {
+        checkAdminExistence(createFlightRequest.getAdminId());
+
         if (createFlightRequest.getDepartureTime().isBefore(LocalDateTime.now())) {
             throw new InvalidFlightDateException("Flight departure time cannot be in the past.");
         }
-        boolean flightExists = repository.existsByDepartureTimeAndDepartureAirportAndArrivalAirportAndAirlineName(
+        boolean flightExists = flightRepository.existsByDepartureTimeAndDepartureAirportAndArrivalAirportAndAirlineName(
                 createFlightRequest.getDepartureTime(),
                 createFlightRequest.getDepartureAirport(),
                 createFlightRequest.getArrivalAirport(),
@@ -95,12 +68,15 @@ public class AdminFlightService {
         if (flightExists) {
             throw new AlreadyExistsException("A flight with the same details already exists.");
         }
-        if (createFlightRequest.getMaxSeats() <= 0) {
-            throw new InvalidException("Seat capacity must be greater than zero.");
-        }
-        FlightEntity flightEntity = mapper.toEntity(createFlightRequest);
 
-        FlightEntity savedFlight = repository.save(flightEntity);
+        FlightEntity savedFlight = flightRepository.save(mapper.toEntity(createFlightRequest));
+
         return mapper.toFlightDto(savedFlight);
+    }
+
+    private void checkAdminExistence(Long adminId) {
+        if (!userRepository.existsByIdAndRoleAdmin(adminId)) {
+            throw new UnauthorizedAccessException("Admin with specified admin id not found");
+        }
     }
 }

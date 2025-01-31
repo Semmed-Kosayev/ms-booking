@@ -1,10 +1,15 @@
 package az.edu.turing.booking.controller;
 
-import az.edu.turing.booking.model.dto.FlightDto;
+import az.edu.turing.booking.model.dto.request.FlightFilter;
+import az.edu.turing.booking.model.dto.response.FlightDto;
 import az.edu.turing.booking.model.enums.City;
 import az.edu.turing.booking.service.FlightService;
+import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,18 +34,17 @@ public class FlightController {
 
     @GetMapping
     public ResponseEntity<Page<FlightDto>> getAll(
+            @Parameter(hidden = true)
             @PageableDefault(size = 10, sort = "departureTime", direction = Sort.Direction.ASC)
             Pageable pageable,
-            @RequestParam(name = "destination", required = false) City destination,
-            @RequestParam(name = "date", required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-            @RequestParam(name = "ticketCount", required = false)
-            int ticketCount) {
-        return ResponseEntity.ok(flightService.getAllFlight(pageable, destination, date, ticketCount));
+            @Valid @ParameterObject
+            FlightFilter filter
+    ) {
+        return ResponseEntity.ok(flightService.getAllFlight(pageable, filter));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FlightDto> getById(@Min(1) @PathVariable Long id) {
+    public ResponseEntity<FlightDto> getById(@Min(1) @NotNull @PathVariable Long id) {
         return ResponseEntity.ok(flightService.getById(id));
     }
 }

@@ -3,14 +3,18 @@ package az.edu.turing.booking.service.admin;
 import az.edu.turing.booking.domain.entity.UserEntity;
 import az.edu.turing.booking.domain.repository.UserRepository;
 import az.edu.turing.booking.exception.NotFoundException;
+import az.edu.turing.booking.exception.UnauthorizedAccessException;
 import az.edu.turing.booking.mapper.UserMapper;
 import az.edu.turing.booking.model.dto.request.UpdateUserDto;
 import az.edu.turing.booking.model.dto.response.UserDto;
 import az.edu.turing.booking.model.enums.UserStatus;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -18,40 +22,45 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminUserService {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     private final UserMapper userMapper;
 
     @Transactional
-    public void deleteById(long id) {
-        UserEntity userById = repository.findById(id)
+    public void deleteById(Long userId, Long adminId) {
+        checkAdminExistence(adminId);
+        UserEntity userById = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User with specified id not found"));
         userById.setStatus(UserStatus.DELETED);
-        repository.save(userById);
+        userRepository.save(userById);
     }
 
-    public List<UserDto> getAll() {
-        return repository.findAll().stream().map(userMapper::toUserDto).toList();
+    public List<UserDto> getAll(Long adminId) {
+        checkAdminExistence(adminId);
+        return userRepository.findAll().stream().map(userMapper::toUserDto).toList();
     }
 
-    public UserDto getById(long id) {
-        UserEntity userEntity = repository.findById(id)
+    public UserDto getById(Long userId, Long adminId) {
+        checkAdminExistence(adminId);
+        UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User with specified id not found"));
         return userMapper.toUserDto(userEntity);
     }
 
     @Transactional
-    public UserDto update(long id, UpdateUserDto updatedUserDto) {
-        UserEntity user = repository.findById(id)
+    public UserDto update(Long id, UpdateUserDto updatedUserDto) {
+        checkAdminExistence(updatedUserDto.getAdminId());
+
+        UserEntity user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User with specified id not found"));
-        user.setFirstName(updatedUserDto.getFirstName());
-        user.setLastName(updatedUserDto.getLastName());
-        user.setEmail(updatedUserDto.getEmail());
-        user.setPhoneNumber(updatedUserDto.getPhoneNumber());
-        user.setDateOfBirth(updatedUserDto.getDateOfBirth());
-        user.setNationality(updatedUserDto.getNationality());
-        user.setRole(updatedUserDto.getRole());
-        user.setStatus(updatedUserDto.getStatus());
-        UserEntity updatedUserEntity = repository.save(user);
-        return userMapper.toUserDto(updatedUserEntity);
+
+        UserEntity updatedUserEntity = userMapper.updateUserEntityFromDto(user, updatedUserDto);
+
+        return userMapper.toUserDto(userRepository.save(updatedUserEntity));
+    }
+
+    private void checkAdminExistence(Long adminId) {
+        if (!userRepository.existsByIdAndRoleAdmin(adminId)) {
+            throw new UnauthorizedAccessException("Admin with specified admin id not found");
+        }
     }
 }

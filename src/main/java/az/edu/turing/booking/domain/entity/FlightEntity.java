@@ -19,6 +19,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -26,7 +27,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Builder
+@SuperBuilder()
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -73,4 +74,6 @@ public class FlightEntity extends BaseEntity {
     public Duration getDuration() {
         return Duration.between(this.departureTime, this.arrivalTime);
     }
+
+
 }
