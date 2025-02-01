@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -49,13 +48,13 @@ public class BookingController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@Min(1) @NotNull @PathVariable Long id) {
+    public ResponseEntity<Void> delete(@Min(1) @NotNull @PathVariable Long id) {
         service.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping
-    public ResponseEntity<BookingDto> save(@RequestBody @Valid CreateBookingRequest request) {
+    public ResponseEntity<BookingDto> create(@RequestBody @Valid CreateBookingRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
 }

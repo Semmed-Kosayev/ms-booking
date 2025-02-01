@@ -1,4 +1,4 @@
-package az.edu.turing.booking.exception;
+package az.edu.turing.booking.model.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -6,10 +6,24 @@ databaseChangeLog:
         - insert:
             tableName: tickets
             columns:
-              - column: { name: type, value: 'ECONOMY' }
-              - column: { name: price, valueNumeric: 500 }
-              - column: { name: flight_id, valueNumeric: 1 }
-              - column: { name: created_at, valueComputed: 'CURRENT_TIMESTAMP' }
-              - column: { name: updated_at, valueComputed: 'CURRENT_TIMESTAMP' }
-              - column: { name: created_by, valueNumeric: 1 }
-              - column: { name: updated_by, valueNumeric: 1 }
+              - column:
+                  name: type
+                  value: 'ECONOMY'
+              - column:
+                  name: price
+                  valueNumeric: 500
+              - column:
+                  name: flight_id
+                  valueNumeric: 1
+              - column:
+                  name: created_at
+                  valueComputed: 'CURRENT_TIMESTAMP'
+              - column:
+                  name: updated_at
+                  valueComputed: 'CURRENT_TIMESTAMP'
+              - column:
+                  name: created_by
+                  valueNumeric: 1
+              - column:
+                  name: updated_by
+                  valueNumeric: 1

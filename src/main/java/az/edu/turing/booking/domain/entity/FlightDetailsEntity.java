@@ -6,9 +6,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,10 +21,6 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = "flight_details")
 public class FlightDetailsEntity extends BaseEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "aircraft_model", nullable = false)
@@ -57,4 +50,14 @@ public class FlightDetailsEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private FlightStatus status;
+
+    public Integer decreaseAvailableSeats() {
+        availableSeats = availableSeats - 1;
+        return availableSeats;
+    }
+
+    public Integer increaseAvailableSeats() {
+        availableSeats = availableSeats + 1;
+        return availableSeats;
+    }
 }

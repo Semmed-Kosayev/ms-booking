@@ -6,16 +6,42 @@ databaseChangeLog:
         - insert:
             tableName: flight_details
             columns:
-              - column: { name: aircraft_model, value: 'BOEING_737' }
-              - column: { name: departure_terminal, value: 'T1' }
-              - column: { name: arrival_terminal, value: 'T2' }
-              - column: { name: gate_number, valueNumeric: 5 }
-              - column: { name: max_baggage_weight, valueNumeric: 30 }
-              - column: { name: is_wifi_available, valueBoolean: true }
-              - column: { name: available_seats, valueNumeric: 180 }
-              - column: { name: max_seats, valueNumeric: 200 }
-              - column: { name: status, value: 'AVAILABLE' }
-              - column: { name: created_at, valueComputed: 'CURRENT_TIMESTAMP' }
-              - column: { name: updated_at, valueComputed: 'CURRENT_TIMESTAMP' }
-              - column: { name: created_by, valueNumeric: 1 }
-              - column: { name: updated_by, valueNumeric: 1 }
+              - column:
+                  name: aircraft_model
+                  value: 'BOEING_737'
+              - column:
+                  name: departure_terminal
+                  value: 'T1'
+              - column:
+                  name: arrival_terminal
+                  value: 'T2'
+              - column:
+                  name: gate_number
+                  valueNumeric: 5
+              - column:
+                  name: max_baggage_weight
+                  valueNumeric: 30
+              - column:
+                  name: is_wifi_available
+                  valueBoolean: true
+              - column:
+                  name: available_seats
+                  valueNumeric: 180
+              - column:
+                  name: max_seats
+                  valueNumeric: 200
+              - column:
+                  name: status
+                  value: 'AVAILABLE'
+              - column:
+                  name: created_at
+                  valueComputed: 'CURRENT_TIMESTAMP'
+              - column:
+                  name: updated_at
+                  valueComputed: 'CURRENT_TIMESTAMP'
+              - column:
+                  name: created_by
+                  valueNumeric: 1
+              - column:
+                  name: updated_by
+                  valueNumeric: 1

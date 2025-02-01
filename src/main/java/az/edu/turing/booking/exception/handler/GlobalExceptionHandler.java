@@ -1,6 +1,11 @@
-package az.edu.turing.booking.exception;
+package az.edu.turing.booking.exception.handler;
 
+import az.edu.turing.booking.exception.AlreadyExistsException;
+import az.edu.turing.booking.exception.NotEnoughSeatsException;
+import az.edu.turing.booking.exception.NotFoundException;
+import az.edu.turing.booking.exception.UnauthorizedAccessException;
 import az.edu.turing.booking.model.constant.ErrorCode;
+import az.edu.turing.booking.model.dto.response.GlobalResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +46,18 @@ public class GlobalExceptionHandler {
         exceptionLog(exception);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(GlobalResponse.builder()
                 .requestId(UUID.randomUUID())
-                .errorCode(ErrorCode.UNAUTHORIZEDACCESS)
+                .errorCode(ErrorCode.UNAUTHORIZED_ACCESS)
+                .errorMEssage(exception.getMessage())
+                .localDateTime(LocalDateTime.now())
+                .build());
+    }
+
+    @ExceptionHandler(NotEnoughSeatsException.class)
+    public ResponseEntity<GlobalResponse> notEnoughSeatsExceptionHandler(NotEnoughSeatsException exception) {
+        exceptionLog(exception);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(GlobalResponse.builder()
+                .requestId(UUID.randomUUID())
+                .errorCode(ErrorCode.CONFLICT)
                 .errorMEssage(exception.getMessage())
                 .localDateTime(LocalDateTime.now())
                 .build());
