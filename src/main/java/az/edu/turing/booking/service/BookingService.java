@@ -1,11 +1,13 @@
 package az.edu.turing.booking.service;
 
 import az.edu.turing.booking.domain.entity.BookingEntity;
+import az.edu.turing.booking.domain.entity.FlightDetailsEntity;
 import az.edu.turing.booking.domain.entity.FlightEntity;
 import az.edu.turing.booking.domain.entity.UserEntity;
 import az.edu.turing.booking.domain.repository.BookingRepository;
 import az.edu.turing.booking.domain.repository.FlightRepository;
 import az.edu.turing.booking.domain.repository.UserRepository;
+import az.edu.turing.booking.exception.NotEnoughSeatsException;
 import az.edu.turing.booking.exception.NotFoundException;
 import az.edu.turing.booking.mapper.BookingMapper;
 import az.edu.turing.booking.model.dto.request.CreateBookingRequest;
@@ -54,8 +56,17 @@ public class BookingService {
         UserEntity userEntity = userRepository.findById(request.passengerId())
                 .orElseThrow(() -> new NotFoundException("User with specified id not found"));
 
-        BookingEntity bookingEntityFromRequest = bookingMapper.toBookingEntity(request, flightEntity, userEntity);
+        FlightDetailsEntity flightDetails = flightEntity.getFlightDetails();
+        if (flightDetails.getAvailableSeats() <= 0) {
+            throw new NotEnoughSeatsException("Flight does not have enough seats");
+        }
 
-        return bookingMapper.toBookingDto(bookingRepository.save(bookingEntityFromRequest));
+        flightDetails.decreaseAvailableSeats();
+        flightRepository.save(flightEntity);
+
+        BookingEntity bookingEntityFromRequest = bookingMapper.toBookingEntity(request, flightEntity, userEntity);
+        BookingEntity savedBooking = bookingRepository.save(bookingEntityFromRequest);
+
+        return bookingMapper.toBookingDto(savedBooking);
     }
 }
