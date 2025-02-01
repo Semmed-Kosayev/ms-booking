@@ -1,6 +1,9 @@
 package az.edu.turing.booking.domain.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +20,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @MappedSuperclass
 public abstract class BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
