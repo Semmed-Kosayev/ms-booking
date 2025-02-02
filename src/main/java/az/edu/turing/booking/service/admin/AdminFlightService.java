@@ -47,7 +47,7 @@ public class AdminFlightService {
         FlightEntity flightEntity = flightRepository.findById(flightId)
                 .orElseThrow(() -> new NotFoundException("Flight not found"));
 
-        flightEntity.getFlightDetails().setStatus(FlightStatus.CANCELLED);
+        flightEntity.getFlightDetail().setStatus(FlightStatus.CANCELLED);
 
         flightRepository.save(flightEntity);
     }

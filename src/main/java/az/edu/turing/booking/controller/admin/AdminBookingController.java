@@ -50,7 +50,7 @@ public class AdminBookingController {
 
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
             @Min(1) @NotNull @PathVariable("id") Long bookingId,
             @Min(1) @NotNull @RequestHeader("Admin-Id") Long adminId

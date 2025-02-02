@@ -1,15 +1,12 @@
 package az.edu.turing.booking.controller.admin;
 
-import az.edu.turing.booking.exception.UnauthorizedAccessException;
 import az.edu.turing.booking.model.dto.request.UpdateUserDto;
 import az.edu.turing.booking.model.dto.response.UserDto;
 import az.edu.turing.booking.service.admin.AdminUserService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -33,14 +29,14 @@ public class AdminUserController {
     private final AdminUserService service;
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(
+    public ResponseEntity<Void> delete(
             @Min(1) @NotNull @PathVariable("id")
             Long userId,
             @Min(1) @NotNull @RequestHeader("Admin-Id")
             Long adminId
     ) {
         service.deleteById(userId, adminId);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
@@ -48,7 +44,7 @@ public class AdminUserController {
         return ResponseEntity.ok(service.getAll(adminId));
     }
 
-    @PutMapping("/passenger/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<UserDto> update(
             @Min(1) @NotNull @PathVariable Long id,
             @Valid @RequestBody UpdateUserDto updatedUserDto
