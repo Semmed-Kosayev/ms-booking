@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Entity
 @Table(name = "flight_details")
-public class FlightDetailsEntity extends BaseEntity {
+public class FlightDetailEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "aircraft_model", nullable = false)

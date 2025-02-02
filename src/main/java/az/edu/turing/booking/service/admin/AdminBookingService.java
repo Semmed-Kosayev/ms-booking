@@ -55,7 +55,7 @@ public class AdminBookingService {
         checkAdminExistence(adminId);
         BookingEntity bookingEntity = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Booking with specified id not found"));
-        return bookingMapper.toBookingDto(bookingEntity);
+        return bookingMapper.toBookingDto(bookingRepository.save(bookingEntity));
     }
 
     @Transactional
@@ -63,7 +63,13 @@ public class AdminBookingService {
         checkAdminExistence(adminId);
         BookingEntity bookingEntity = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Booking with specified id not found"));
+
+        FlightEntity flight = bookingEntity.getFlight();
+        flight.getFlightDetail().increaseAvailableSeats();
+        flightRepository.save(flight);
+
         bookingEntity.setStatus(BookingStatus.CANCELLED);
+        bookingRepository.save(bookingEntity);
     }
 
     private void checkAdminExistence(Long adminId) {

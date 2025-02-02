@@ -1,7 +1,7 @@
 package az.edu.turing.booking.service;
 
 import az.edu.turing.booking.domain.entity.BookingEntity;
-import az.edu.turing.booking.domain.entity.FlightDetailsEntity;
+import az.edu.turing.booking.domain.entity.FlightDetailEntity;
 import az.edu.turing.booking.domain.entity.FlightEntity;
 import az.edu.turing.booking.domain.entity.UserEntity;
 import az.edu.turing.booking.domain.repository.BookingRepository;
@@ -45,6 +45,11 @@ public class BookingService {
     public void deleteById(long id) {
         BookingEntity bookingById = bookingRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Booking with specified id not found"));
+
+        FlightEntity flight = bookingById.getFlight();
+        flight.getFlightDetail().increaseAvailableSeats();
+        flightRepository.save(flight);
+
         bookingById.setStatus(BookingStatus.CANCELLED);
         bookingRepository.save(bookingById);
     }
@@ -56,7 +61,7 @@ public class BookingService {
         UserEntity userEntity = userRepository.findById(request.passengerId())
                 .orElseThrow(() -> new NotFoundException("User with specified id not found"));
 
-        FlightDetailsEntity flightDetails = flightEntity.getFlightDetails();
+        FlightDetailEntity flightDetails = flightEntity.getFlightDetail();
         if (flightDetails.getAvailableSeats() <= 0) {
             throw new NotEnoughSeatsException("Flight does not have enough seats");
         }
