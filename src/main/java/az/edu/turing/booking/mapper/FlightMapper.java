@@ -1,16 +1,14 @@
 package az.edu.turing.booking.mapper;
 
-import az.edu.turing.booking.domain.entity.FlightDetailsEntity;
+import az.edu.turing.booking.domain.entity.FlightDetailEntity;
 import az.edu.turing.booking.domain.entity.FlightEntity;
 import az.edu.turing.booking.model.dto.request.UpdateFlightRequest;
 import az.edu.turing.booking.model.dto.response.FlightDto;
 import az.edu.turing.booking.model.dto.request.CreateFlightRequest;
 import az.edu.turing.booking.model.dto.response.UpdateFlightResponse;
-import az.edu.turing.booking.model.enums.FlightStatus;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
@@ -19,41 +17,41 @@ public interface FlightMapper {
 
     FlightMapper INSTANCE = Mappers.getMapper(FlightMapper.class);
 
-    @Mapping(source = "flightDetails.aircraftModel", target = "aircraftModel")
-    @Mapping(source = "flightDetails.departureTerminal", target = "departureTerminal")
-    @Mapping(source = "flightDetails.arrivalTerminal", target = "arrivalTerminal")
-    @Mapping(source = "flightDetails.gateNumber", target = "gateNumber")
-    @Mapping(source = "flightDetails.maxBaggageWeight", target = "maxBaggageWeight")
-    @Mapping(source = "flightDetails.isWifiAvailable", target = "isWifiAvailable")
-    @Mapping(source = "flightDetails.availableSeats", target = "availableSeats")
-    @Mapping(source = "flightDetails.maxSeats", target = "maxSeats")
-    @Mapping(source = "flightDetails.status", target = "flightStatus")
+    @Mapping(source = "flightDetail.aircraftModel", target = "aircraftModel")
+    @Mapping(source = "flightDetail.departureTerminal", target = "departureTerminal")
+    @Mapping(source = "flightDetail.arrivalTerminal", target = "arrivalTerminal")
+    @Mapping(source = "flightDetail.gateNumber", target = "gateNumber")
+    @Mapping(source = "flightDetail.maxBaggageWeight", target = "maxBaggageWeight")
+    @Mapping(source = "flightDetail.isWifiAvailable", target = "isWifiAvailable")
+    @Mapping(source = "flightDetail.availableSeats", target = "availableSeats")
+    @Mapping(source = "flightDetail.maxSeats", target = "maxSeats")
+    @Mapping(source = "flightDetail.status", target = "flightStatus")
     UpdateFlightResponse toFlightResponseDto(FlightEntity flightEntity);
 
-    @Mapping(source = "flightDetails.aircraftModel", target = "aircraftModel")
-    @Mapping(source = "flightDetails.departureTerminal", target = "departureTerminal")
-    @Mapping(source = "flightDetails.arrivalTerminal", target = "arrivalTerminal")
-    @Mapping(source = "flightDetails.gateNumber", target = "gateNumber")
-    @Mapping(source = "flightDetails.maxBaggageWeight", target = "maxBaggageWeight")
-    @Mapping(source = "flightDetails.isWifiAvailable", target = "isWifiAvailable")
-    @Mapping(source = "flightDetails.availableSeats", target = "availableSeats")
-    @Mapping(source = "flightDetails.maxSeats", target = "maxSeats")
-    @Mapping(source = "flightDetails.status", target = "flightStatus")
+    @Mapping(source = "flightDetail.aircraftModel", target = "aircraftModel")
+    @Mapping(source = "flightDetail.departureTerminal", target = "departureTerminal")
+    @Mapping(source = "flightDetail.arrivalTerminal", target = "arrivalTerminal")
+    @Mapping(source = "flightDetail.gateNumber", target = "gateNumber")
+    @Mapping(source = "flightDetail.maxBaggageWeight", target = "maxBaggageWeight")
+    @Mapping(source = "flightDetail.isWifiAvailable", target = "isWifiAvailable")
+    @Mapping(source = "flightDetail.availableSeats", target = "availableSeats")
+    @Mapping(source = "flightDetail.maxSeats", target = "maxSeats")
+    @Mapping(source = "flightDetail.status", target = "flightStatus")
     @Mapping(source = "departureCity", target = "departureCity")
     @Mapping(source = "arrivalCity", target = "arrivalCity")
     FlightDto toFlightDto(FlightEntity flightEntity);
 
     @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
-    @Mapping(target = "flightDetails", source = "request", qualifiedByName = "mapFlightDetails")
+    @Mapping(target = "flightDetail", source = "request", qualifiedByName = "mapFlightDetail")
     FlightEntity toEntity(CreateFlightRequest request);
 
-    @Named("mapFlightDetails")
-    default FlightDetailsEntity mapFlightDetails(CreateFlightRequest request) {
+    @Named("mapFlightDetail")
+    default FlightDetailEntity mapFlightDetail(CreateFlightRequest request) {
         if (request == null) {
             return null;
         }
-        return FlightDetailsEntity.builder()
+        return FlightDetailEntity.builder()
                 .aircraftModel(request.getAircraftModel())
                 .departureTerminal(request.getDepartureTerminal())
                 .arrivalTerminal(request.getArrivalTerminal())
@@ -75,7 +73,7 @@ public interface FlightMapper {
     @Mapping(target = "arrivalAirport", source = "updateFlightRequest.arrivalAirport")
     @Mapping(target = "departureCity", source = "updateFlightRequest.departureCity")
     @Mapping(target = "arrivalCity", source = "updateFlightRequest.arrivalCity")
-    @Mapping(target = "flightDetails", source = "updateFlightRequest")
+    @Mapping(target = "flightDetail", source = "updateFlightRequest")
     FlightEntity updateFlightEntityFromRequest(@MappingTarget FlightEntity existingFlight, UpdateFlightRequest updateFlightRequest);
 
     @Mapping(target = "aircraftModel", source = "updateFlightRequest.aircraftModel")
@@ -87,5 +85,5 @@ public interface FlightMapper {
     @Mapping(target = "availableSeats", source = "updateFlightRequest.availableSeats")
     @Mapping(target = "maxSeats", source = "updateFlightRequest.maxSeats")
     @Mapping(target = "status", source = "updateFlightRequest.flightStatus")
-    void updateFlightDetailsFromRequest(@MappingTarget FlightDetailsEntity flightDetails, UpdateFlightRequest updateFlightRequest);
+    void updateFlightDetailsFromRequest(@MappingTarget FlightDetailEntity flightDetails, UpdateFlightRequest updateFlightRequest);
 }

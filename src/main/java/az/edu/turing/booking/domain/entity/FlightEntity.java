@@ -55,7 +55,7 @@ public class FlightEntity extends BaseEntity {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "flight_details_id", nullable = false)
-    private FlightDetailsEntity flightDetails;
+    private FlightDetailEntity flightDetail;
 
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BookingEntity> bookings;

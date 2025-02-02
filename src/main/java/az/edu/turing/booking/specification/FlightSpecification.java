@@ -1,6 +1,6 @@
 package az.edu.turing.booking.specification;
 
-import az.edu.turing.booking.domain.entity.FlightDetailsEntity;
+import az.edu.turing.booking.domain.entity.FlightDetailEntity;
 import az.edu.turing.booking.domain.entity.FlightEntity;
 import az.edu.turing.booking.domain.entity.Ticket;
 import az.edu.turing.booking.model.dto.request.FlightFilter;
@@ -17,7 +17,7 @@ public class FlightSpecification {
 
     public static Specification<FlightEntity> filterFlights(FlightFilter filter) {
         return (Root<FlightEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
-            Join<FlightEntity, FlightDetailsEntity> flightDetails = root.join("flightDetails", JoinType.LEFT);
+            Join<FlightEntity, FlightDetailEntity> flightDetails = root.join("flightDetail", JoinType.LEFT);
             Join<FlightEntity, Ticket> tickets = root.join("tickets", JoinType.LEFT);
             Predicate predicate = cb.conjunction(); // `AND` condition
 
