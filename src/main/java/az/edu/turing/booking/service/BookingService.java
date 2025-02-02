@@ -45,6 +45,11 @@ public class BookingService {
     public void deleteById(long id) {
         BookingEntity bookingById = bookingRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Booking with specified id not found"));
+
+        FlightEntity flight = bookingById.getFlight();
+        flight.getFlightDetail().increaseAvailableSeats();
+        flightRepository.save(flight);
+
         bookingById.setStatus(BookingStatus.CANCELLED);
         bookingRepository.save(bookingById);
     }
