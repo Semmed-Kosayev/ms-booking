@@ -3,9 +3,9 @@ spring:
     name: ms-booking
 
   datasource:
-    url: jdbc:postgresql://localhost:5440/booking
+    url: jdbc:postgresql://localhost:5440/postgres
     username: postgres
-    password: root
+    password: postgres
 
   jpa:
     hibernate:
