@@ -27,9 +27,6 @@ import java.time.LocalDateTime;
 @Table(name = "bookings")
 public class BookingEntity extends BaseEntity {
 
-    @Column(name = "flight_date", nullable = false)
-    private LocalDateTime flightDate;
-
     @Column(name = "seat_number", nullable = false)
     private String seatNumber;
 
@@ -48,4 +45,8 @@ public class BookingEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "flight_id", nullable = false)
     private FlightEntity flight;
+
+    public String getFullName() {
+        return passenger.getFirstName() + " " + passenger.getLastName();
+    }
 }

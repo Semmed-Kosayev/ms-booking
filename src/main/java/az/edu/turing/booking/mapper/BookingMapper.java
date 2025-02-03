@@ -17,18 +17,15 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface BookingMapper {
 
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "flight.airlineName", target = "airlineName")
-    @Mapping(source = "flight.departureCity", target = "departureCity")
-    @Mapping(source = "flight.arrivalCity", target = "arrivalCity")
-    @Mapping(source = "flight.departureAirport", target = "departureAirport")
-    @Mapping(source = "flight.arrivalAirport", target = "arrivalAirport")
-    @Mapping(source = "flight.departureTime", target = "departureTime")
-    @Mapping(source = "flight.arrivalTime", target = "arrivalTime")
-    @Mapping(source = "flight", target = "duration", qualifiedByName = "formatDuration")
-    @Mapping(source = "seatNumber", target = "seatNumber")
-    @Mapping(source = "classType", target = "classType")
-    @Mapping(source = "status", target = "status")
+    @Mapping(target = "passengerFullName", expression = "java(bookingEntity.getFullName())")
+    @Mapping(target = "airlineName", source = "flight.airlineName")
+    @Mapping(target = "departureCity", source = "flight.departureCity")
+    @Mapping(target = "arrivalCity", source = "flight.arrivalCity")
+    @Mapping(target = "departureAirport", source = "flight.departureAirport")
+    @Mapping(target = "arrivalAirport", source = "flight.arrivalAirport")
+    @Mapping(target = "departureTime", source = "flight.departureTime")
+    @Mapping(target = "arrivalTime", source = "flight.arrivalTime")
+    @Mapping(target = "duration", source = "flight", qualifiedByName = "formatDuration")
     BookingDto toBookingDto(BookingEntity bookingEntity);
 
     @Named("formatDuration")
@@ -46,7 +43,6 @@ public interface BookingMapper {
     @Mapping(target = "status", source = "updateRequest.status")
     @Mapping(target = "passenger", source = "userEntity")
     @Mapping(target = "flight", source = "flightEntity")
-    @Mapping(target = "flightDate", source = "flightEntity.departureTime")
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "updatedBy", source = "updateRequest.adminId")
     @Mapping(target = "createdAt", ignore = true)
@@ -58,7 +54,6 @@ public interface BookingMapper {
                                                  FlightEntity flightEntity);
 
     @Mapping(target = "status", constant = "CONFIRMED")
-    @Mapping(target = "flightDate", source = "flightEntity.departureTime")
     @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "createdBy", source = "request.passengerId")

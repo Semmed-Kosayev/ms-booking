@@ -41,7 +41,7 @@ public class BookingController {
             @Min(1) @NotNull @PathVariable
             Long passengerId,
             @Parameter(hidden = true)
-            @PageableDefault(size = 5, sort = "flightDate", direction = Sort.Direction.ASC)
+            @PageableDefault(size = 5, sort = "flight.departureTime", direction = Sort.Direction.ASC)
             Pageable pageable
     ) {
         return ResponseEntity.ok(service.getAllByPassengerId(passengerId, pageable));
