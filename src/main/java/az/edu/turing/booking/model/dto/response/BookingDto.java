@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 public record BookingDto(
         Long id,
+        String passengerFullName,
         String airlineName,
         City departureCity,
         City arrivalCity,

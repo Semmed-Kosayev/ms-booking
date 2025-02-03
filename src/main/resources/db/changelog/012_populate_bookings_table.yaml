@@ -7,9 +7,6 @@ databaseChangeLog:
             tableName: bookings
             columns:
               - column:
-                  name: flight_date
-                  valueDate: '2024-06-01T08:00:00'
-              - column:
                   name: seat_number
                   value: '12A'
               - column:

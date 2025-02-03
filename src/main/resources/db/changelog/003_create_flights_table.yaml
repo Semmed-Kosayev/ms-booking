@@ -6,16 +6,68 @@ databaseChangeLog:
         - createTable:
             tableName: flights
             columns:
-              - column: { name: id, type: BIGINT, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-              - column: { name: airline_name, type: VARCHAR(255), constraints: { nullable: false } }
-              - column: { name: departure_time, type: TIMESTAMP, constraints: { nullable: false } }
-              - column: { name: arrival_time, type: TIMESTAMP, constraints: { nullable: false } }
-              - column: { name: departure_airport, type: VARCHAR(255), constraints: { nullable: false } }
-              - column: { name: arrival_airport, type: VARCHAR(255), constraints: { nullable: false } }
-              - column: { name: departure_city, type: VARCHAR(255), constraints: { nullable: false } }
-              - column: { name: arrival_city, type: VARCHAR(255), constraints: { nullable: false } }
-              - column: { name: flight_details_id, type: BIGINT, constraints: { nullable: false } }
-              - column: { name: created_at, type: TIMESTAMP, defaultValueComputed: CURRENT_TIMESTAMP, constraints: { nullable: false } }
-              - column: { name: updated_at, type: TIMESTAMP, defaultValueComputed: CURRENT_TIMESTAMP, constraints: { nullable: false } }
-              - column: { name: created_by, type: BIGINT }
-              - column: { name: updated_by, type: BIGINT }
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: airline_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: departure_time
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: arrival_time
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: departure_airport
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: arrival_airport
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: departure_city
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: arrival_city
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: flight_details_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: BIGINT
+              - column:
+                  name: updated_by
+                  type: BIGINT
