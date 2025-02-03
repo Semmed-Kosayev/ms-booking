@@ -37,9 +37,7 @@ public class BookingService {
     }
 
     public Page<BookingDto> getAllByPassengerId(Long passengerId, Pageable pageable) {
-        Page<BookingEntity> allByPassengerId = bookingRepository.findAllByPassengerId(passengerId, pageable);
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        return allByPassengerId
+        return bookingRepository.findAllByPassengerId(passengerId, pageable)
                 .map(bookingMapper::toBookingDto);
     }
 
