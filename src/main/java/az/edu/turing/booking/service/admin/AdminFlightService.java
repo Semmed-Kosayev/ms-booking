@@ -30,7 +30,6 @@ public class AdminFlightService {
 
     @Transactional
     public UpdateFlightResponse updateFlight(long flightId, UpdateFlightRequest updateFlightRequest, Long adminId) {
-        checkAdminExistence(adminId);
         FlightEntity existingFlight = flightRepository.findById(flightId)
                 .orElseThrow(() -> new NotFoundException("Flight with specified id not found"));
 
