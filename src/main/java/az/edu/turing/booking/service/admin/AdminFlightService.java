@@ -29,11 +29,12 @@ public class AdminFlightService {
     private final FlightMapper mapper;
 
     @Transactional
-    public UpdateFlightResponse updateFlight(long flightId, UpdateFlightRequest updateFlightRequest) {
+    public UpdateFlightResponse updateFlight(long flightId, UpdateFlightRequest updateFlightRequest, Long adminId) {
+        checkAdminExistence(adminId);
         FlightEntity existingFlight = flightRepository.findById(flightId)
                 .orElseThrow(() -> new NotFoundException("Flight with specified id not found"));
 
-        checkAdminExistence(updateFlightRequest.adminId());
+        checkAdminExistence(adminId);
 
         FlightEntity updatedFlight = mapper.updateFlightEntityFromRequest(existingFlight, updateFlightRequest);
 
