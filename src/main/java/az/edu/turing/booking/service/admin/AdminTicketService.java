@@ -33,6 +33,8 @@ public class AdminTicketService {
 
         Ticket ticket = mapper.toTicket(createTicketRequest);
         ticket.setFlight(flight);
+        ticket.setCreatedBy(adminId);
+        ticket.setUpdatedBy(adminId);
 
         return mapper.toTicketDto(ticketRepository.save(ticket));
     }

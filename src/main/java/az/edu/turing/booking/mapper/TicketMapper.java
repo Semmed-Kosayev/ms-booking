@@ -17,5 +17,7 @@ public interface TicketMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "flight", ignore = true)
+    @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
+    @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
     Ticket toTicket(CreateTicketRequest ticketDto);
 }
