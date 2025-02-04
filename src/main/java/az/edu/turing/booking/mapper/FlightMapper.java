@@ -2,9 +2,9 @@ package az.edu.turing.booking.mapper;
 
 import az.edu.turing.booking.domain.entity.FlightDetailEntity;
 import az.edu.turing.booking.domain.entity.FlightEntity;
+import az.edu.turing.booking.model.dto.request.CreateFlightRequest;
 import az.edu.turing.booking.model.dto.request.UpdateFlightRequest;
 import az.edu.turing.booking.model.dto.response.FlightDto;
-import az.edu.turing.booking.model.dto.request.CreateFlightRequest;
 import az.edu.turing.booking.model.dto.response.UpdateFlightResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
