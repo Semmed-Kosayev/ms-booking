@@ -30,17 +30,20 @@ public class AdminFlightController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UpdateFlightResponse> update(
-            @Min(1) @NotNull @PathVariable Long id,
+            @Min(1) @NotNull @PathVariable("id") Long flightId,
+            @Min(1) @NotNull @RequestHeader("Admin-Id") Long adminId,
             @Valid @RequestBody UpdateFlightRequest updateFlightRequest
     ) {
-        return ResponseEntity.ok(service.updateFlight(id, updateFlightRequest));
+        return ResponseEntity.ok(service.updateFlight(adminId, updateFlightRequest));
     }
 
     @PostMapping
     public ResponseEntity<FlightDto> create(
+            @Min(1) @NotNull @RequestHeader("Admin-Id") Long adminId,
             @Valid @RequestBody CreateFlightRequest createFlightRequest
     ) {
-        return ResponseEntity.ok(service.createFlight(createFlightRequest));
+        return ResponseEntity.ok(service.createFlight(createFlightRequest, adminId));
+
     }
 
     @DeleteMapping("/{id}")

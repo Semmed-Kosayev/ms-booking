@@ -53,8 +53,8 @@ public class AdminFlightService {
     }
 
     @Transactional
-    public FlightDto createFlight(CreateFlightRequest createFlightRequest) {
-        checkAdminExistence(createFlightRequest.getAdminId());
+    public FlightDto createFlight(CreateFlightRequest createFlightRequest, Long adminId) {
+        checkAdminExistence(adminId);
 
         if (createFlightRequest.getDepartureTime().isBefore(LocalDateTime.now())) {
             throw new InvalidFlightDateException("Flight departure time cannot be in the past.");

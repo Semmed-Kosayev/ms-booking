@@ -46,10 +46,11 @@ public class AdminUserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> update(
-            @Min(1) @NotNull @PathVariable Long id,
+            @Min(1) @NotNull @PathVariable("id") Long userId,
+            @Min(1) @NotNull @RequestHeader("Admin-Id") Long adminId,
             @Valid @RequestBody UpdateUserDto updatedUserDto
     ) {
-        return ResponseEntity.ok(service.update(id, updatedUserDto));
+        return ResponseEntity.ok(service.update(userId, adminId, updatedUserDto));
     }
 
     @GetMapping("/{id}")
