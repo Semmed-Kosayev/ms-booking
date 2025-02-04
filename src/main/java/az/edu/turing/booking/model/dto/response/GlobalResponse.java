@@ -1,5 +1,6 @@
 package az.edu.turing.booking.model.dto.response;
 
+import az.edu.turing.booking.model.constant.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,6 @@ import java.util.UUID;
 public class GlobalResponse {
     private UUID requestId;
     private String errorCode;
-    private String errorMEssage;
+    private String errorMessage;
     private LocalDateTime localDateTime;
 }
