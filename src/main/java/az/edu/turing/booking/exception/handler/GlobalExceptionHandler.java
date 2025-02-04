@@ -124,7 +124,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<GlobalResponse> missingPathVariableExceptionHandler
             (MissingPathVariableException exception) {
         exceptionLog(exception);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(GlobalResponse.builder()
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(GlobalResponse.builder()
                 .requestId(UUID.randomUUID())
                 .errorCode(ErrorCode.MISSING_PATH_VARIABLE)
                 .errorMessage(exception.getMessage())
@@ -136,7 +136,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<GlobalResponse> missingServletRequestParameterExceptionHandler
             (MissingServletRequestParameterException exception) {
         exceptionLog(exception);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(GlobalResponse.builder()
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(GlobalResponse.builder()
                 .requestId(UUID.randomUUID())
                 .errorCode(ErrorCode.MISSING_REQUEST_PARAMETER)
                 .errorMessage(exception.getMessage())
