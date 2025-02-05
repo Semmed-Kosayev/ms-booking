@@ -22,10 +22,7 @@ public record BookingUpdateRequest(
 
         @Min(1)
         @NotNull
-        Long passengerId,
+        Long passengerId
 
-        @Min(1)
-        @NotNull
-        Long adminId
 ) {
 }

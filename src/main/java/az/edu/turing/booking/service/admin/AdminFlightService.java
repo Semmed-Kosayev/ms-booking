@@ -29,11 +29,11 @@ public class AdminFlightService {
     private final FlightMapper mapper;
 
     @Transactional
-    public UpdateFlightResponse updateFlight(long flightId, UpdateFlightRequest updateFlightRequest) {
+    public UpdateFlightResponse updateFlight(long flightId, UpdateFlightRequest updateFlightRequest, Long adminId) {
         FlightEntity existingFlight = flightRepository.findById(flightId)
                 .orElseThrow(() -> new NotFoundException("Flight with specified id not found"));
 
-        checkAdminExistence(updateFlightRequest.adminId());
+        checkAdminExistence(adminId);
 
         FlightEntity updatedFlight = mapper.updateFlightEntityFromRequest(existingFlight, updateFlightRequest);
 
@@ -53,8 +53,8 @@ public class AdminFlightService {
     }
 
     @Transactional
-    public FlightDto createFlight(CreateFlightRequest createFlightRequest) {
-        checkAdminExistence(createFlightRequest.getAdminId());
+    public FlightDto createFlight(CreateFlightRequest createFlightRequest, Long adminId) {
+        checkAdminExistence(adminId);
 
         if (createFlightRequest.getDepartureTime().isBefore(LocalDateTime.now())) {
             throw new InvalidFlightDateException("Flight departure time cannot be in the past.");

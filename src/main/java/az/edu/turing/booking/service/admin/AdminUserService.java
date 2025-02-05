@@ -8,13 +8,10 @@ import az.edu.turing.booking.mapper.UserMapper;
 import az.edu.turing.booking.model.dto.request.UpdateUserDto;
 import az.edu.turing.booking.model.dto.response.UserDto;
 import az.edu.turing.booking.model.enums.UserStatus;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -47,8 +44,8 @@ public class AdminUserService {
     }
 
     @Transactional
-    public UserDto update(Long id, UpdateUserDto updatedUserDto) {
-        checkAdminExistence(updatedUserDto.getAdminId());
+    public UserDto update(Long id, Long adminId, UpdateUserDto updatedUserDto) {
+        checkAdminExistence(adminId);
 
         UserEntity user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User with specified id not found"));
