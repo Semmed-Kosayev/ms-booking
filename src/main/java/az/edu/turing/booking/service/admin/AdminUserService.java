@@ -51,6 +51,7 @@ public class AdminUserService {
                 .orElseThrow(() -> new NotFoundException("User with specified id not found"));
 
         UserEntity updatedUserEntity = userMapper.updateUserEntityFromDto(user, updatedUserDto);
+        updatedUserEntity.setUpdatedBy(adminId);
 
         return userMapper.toUserDto(userRepository.save(updatedUserEntity));
     }

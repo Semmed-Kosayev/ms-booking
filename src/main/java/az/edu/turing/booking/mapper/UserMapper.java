@@ -32,7 +32,7 @@ public interface UserMapper {
     @Mapping(target = "nationality", source = "updateUserDto.nationality")
     @Mapping(target = "role", source = "updateUserDto.role")
     @Mapping(target = "status", source = "updateUserDto.status")
-    @Mapping(target = "updatedBy", source = "updateUserDto.adminId")
+    @Mapping(target = "updatedBy", ignore = true)
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
     UserEntity updateUserEntityFromDto(@MappingTarget UserEntity userEntity, UpdateUserDto updateUserDto);
 }

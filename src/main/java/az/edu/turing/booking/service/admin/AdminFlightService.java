@@ -36,6 +36,7 @@ public class AdminFlightService {
         checkAdminExistence(adminId);
 
         FlightEntity updatedFlight = mapper.updateFlightEntityFromRequest(existingFlight, updateFlightRequest);
+        updatedFlight.setUpdatedBy(adminId);
 
         return mapper.toFlightResponseDto(flightRepository.save(updatedFlight));
     }
@@ -69,7 +70,10 @@ public class AdminFlightService {
             throw new AlreadyExistsException("A flight with the same details already exists.");
         }
 
-        FlightEntity savedFlight = flightRepository.save(mapper.toEntity(createFlightRequest));
+        FlightEntity flight = mapper.toEntity(createFlightRequest);
+        flight.setUpdatedBy(adminId);
+        flight.setCreatedBy(adminId);
+        FlightEntity savedFlight = flightRepository.save(flight);
 
         return mapper.toFlightDto(savedFlight);
     }

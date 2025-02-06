@@ -19,8 +19,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CreateFlightRequest {
 
-    @Min(1) @NotNull
-    private Long adminId;
     @NotBlank
     private String airlineName;
     @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
