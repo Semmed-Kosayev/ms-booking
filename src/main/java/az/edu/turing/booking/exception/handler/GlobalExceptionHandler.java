@@ -37,7 +37,7 @@ import java.util.UUID;
 
 @RestControllerAdvice
 @Slf4j
-public class GlobalExceptionHandler{
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(AlreadyExistsException.class)
     public ResponseEntity<GlobalResponse> alreadyExistsExceptionHandler(AlreadyExistsException exception) {
@@ -64,7 +64,7 @@ public class GlobalExceptionHandler{
     @ExceptionHandler(UnauthorizedAccessException.class)
     public ResponseEntity<GlobalResponse> unauthorizedAccessExceptionHandler(UnauthorizedAccessException exception) {
         exceptionLog(exception);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(GlobalResponse.builder()
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(GlobalResponse.builder()
                 .requestId(UUID.randomUUID())
                 .errorCode(ErrorCode.UNAUTHORIZED_ACCESS)
                 .errorMessage(exception.getMessage())
