@@ -45,6 +45,7 @@ public class AdminBookingService {
 
         BookingEntity updatedBookingEntity =
                 bookingMapper.updateBookingEntityFromRequest(bookingEntity, updateRequest, userEntity, flightEntity);
+        updatedBookingEntity.setUpdatedBy(adminId);
 
         BookingEntity save = bookingRepository.save(updatedBookingEntity);
 
