@@ -47,7 +47,7 @@ public interface BookingMapper {
     @Mapping(target = "passenger", source = "userEntity")
     @Mapping(target = "flight", source = "flightEntity")
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
-    @Mapping(target = "updatedBy", source = "updateRequest.adminId")
+    @Mapping(target = "updatedBy", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
     @Mapping(target = "id", ignore = true)
