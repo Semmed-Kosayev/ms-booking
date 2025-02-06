@@ -19,8 +19,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class UpdateUserDto {
-    @Min(1) @NotNull
-    private Long adminId;
     @NotBlank
     private String firstName;
     @NotBlank

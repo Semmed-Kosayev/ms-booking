@@ -64,7 +64,7 @@ public interface FlightMapper {
                 .build();
     }
 
-    @Mapping(target = "updatedBy", source = "updateFlightRequest.adminId")
+    @Mapping(target = "updatedBy", ignore = true)
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "airlineName", source = "updateFlightRequest.airlineName")
     @Mapping(target = "departureTime", source = "updateFlightRequest.departureTime")
