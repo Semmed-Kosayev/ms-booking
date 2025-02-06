@@ -7,9 +7,13 @@ import az.edu.turing.booking.model.dto.response.UserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
+
+    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+
     UserDto toUserDto(UserEntity userEntity);
 
     UpdateUserDto toDto(UserEntity userEntity);

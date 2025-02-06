@@ -2,10 +2,12 @@ package az.edu.turing.booking.domain.entity;
 
 import az.edu.turing.booking.model.enums.AircraftModel;
 import az.edu.turing.booking.model.enums.FlightStatus;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -50,6 +52,9 @@ public class FlightDetailEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private FlightStatus status;
+
+    @OneToOne(mappedBy = "flightDetail", cascade = CascadeType.ALL)
+    private FlightEntity flight;
 
     public Integer decreaseAvailableSeats() {
         availableSeats = availableSeats - 1;

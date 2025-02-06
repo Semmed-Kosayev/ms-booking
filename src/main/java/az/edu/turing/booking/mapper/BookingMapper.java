@@ -10,12 +10,15 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
+import org.mapstruct.factory.Mappers;
 
 import java.time.Duration;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface BookingMapper {
+
+    BookingMapper INSTANCE = Mappers.getMapper(BookingMapper.class);
 
     @Mapping(target = "passengerFullName", expression = "java(bookingEntity.getFullName())")
     @Mapping(target = "airlineName", source = "flight.airlineName")
