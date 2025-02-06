@@ -34,8 +34,8 @@ public class AdminBookingService {
     }
 
     @Transactional
-    public BookingDto update(long id, BookingUpdateRequest updateRequest, Long adminId) {
-        checkAdminExistence(adminId);
+    public BookingDto update(long id, BookingUpdateRequest updateRequest) {
+        checkAdminExistence(updateRequest.adminId());
         FlightEntity flightEntity = flightRepository.findById(updateRequest.flightId())
                 .orElseThrow(() -> new NotFoundException("Flight with specified id not found"));
         UserEntity userEntity = userRepository.findById(updateRequest.passengerId())
@@ -49,6 +49,13 @@ public class AdminBookingService {
         BookingEntity save = bookingRepository.save(updatedBookingEntity);
 
         return bookingMapper.toBookingDto(save);
+    }
+
+    public BookingDto getById(Long bookingId, Long adminId) {
+        checkAdminExistence(adminId);
+        BookingEntity bookingEntity = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new NotFoundException("Booking with specified id not found"));
+        return bookingMapper.toBookingDto(bookingRepository.save(bookingEntity));
     }
 
     @Transactional

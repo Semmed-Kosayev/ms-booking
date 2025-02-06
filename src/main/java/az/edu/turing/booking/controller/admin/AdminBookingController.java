@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,13 +34,21 @@ public class AdminBookingController {
 
     @PutMapping("/{id}")
     public ResponseEntity<BookingDto> update(
-            @Min(1) @NotNull @PathVariable("id") Long id,
-            @Min(1) @NotNull @RequestHeader("Admin-Id") Long adminId,
-            @Valid @RequestBody BookingUpdateRequest updateRequest
+            @Min(1) @NotNull @PathVariable Long id,
+            @Valid BookingUpdateRequest updateRequest
     ) {
-        return ResponseEntity.ok(service.update(id, updateRequest, adminId));
+        return ResponseEntity.ok(service.update(id, updateRequest));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<BookingDto> getById(
+            @Min(1) @NotNull @PathVariable("id") Long bookingId,
+            @Min(1) @NotNull @RequestHeader("Admin-Id") Long adminId
+    ) {
+        BookingDto bookingById = service.getById(bookingId, adminId);
+        return ResponseEntity.ok(bookingById);
+
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
