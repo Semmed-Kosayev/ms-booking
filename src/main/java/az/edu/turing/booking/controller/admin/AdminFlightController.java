@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,7 +43,7 @@ public class AdminFlightController {
             @Min(1) @NotNull @RequestHeader("Admin-Id") Long adminId,
             @Valid @RequestBody CreateFlightRequest createFlightRequest
     ) {
-        return ResponseEntity.ok(service.createFlight(createFlightRequest, adminId));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createFlight(createFlightRequest, adminId));
     }
 
     @DeleteMapping("/{id}")
