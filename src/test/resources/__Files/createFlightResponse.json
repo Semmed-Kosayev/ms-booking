@@ -1,0 +1,19 @@
+{
+  "id": 1,
+  "airlineName": "Azerbaijan Airlines",
+  "departureTime": "2025-03-18T16:00:00",
+  "arrivalTime": "2025-03-18T18:00:00",
+  "departureAirport": "JFK",
+  "arrivalAirport": "LHR",
+  "departureCity": "BAKU",
+  "arrivalCity": "TOKYO",
+  "aircraftModel": "EMBRAER_E175",
+  "departureTerminal": "T3",
+  "arrivalTerminal": "T4",
+  "gateNumber": 13,
+  "maxBaggageWeight": 30,
+  "isWifiAvailable": true,
+  "availableSeats": 140,
+  "maxSeats": 150,
+  "flightStatus": "AVAILABLE"
+}
