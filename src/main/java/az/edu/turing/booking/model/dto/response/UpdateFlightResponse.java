@@ -3,11 +3,11 @@ package az.edu.turing.booking.model.dto.response;
 import az.edu.turing.booking.model.enums.AircraftModel;
 import az.edu.turing.booking.model.enums.City;
 import az.edu.turing.booking.model.enums.FlightStatus;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
+@Builder
 public record UpdateFlightResponse(
 
         String airlineName,

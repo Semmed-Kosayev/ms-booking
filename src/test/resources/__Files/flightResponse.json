@@ -1,0 +1,19 @@
+{
+  "id": 1,
+  "airlineName": "Example Airlines",
+  "departureTime": "2024-06-01T08:00:00",
+  "arrivalTime": "2024-06-01T12:00:00",
+  "departureAirport": "JFK",
+  "arrivalAirport": "LHR",
+  "departureCity": "NEW_YORK",
+  "arrivalCity": "LONDON",
+  "aircraftModel": "BOEING_737",
+  "departureTerminal": "T1",
+  "arrivalTerminal": "T2",
+  "gateNumber": 5,
+  "maxBaggageWeight": 30,
+  "isWifiAvailable": true,
+  "availableSeats": 180,
+  "maxSeats": 200,
+  "flightStatus": "AVAILABLE"
+}
