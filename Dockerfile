@@ -5,7 +5,7 @@ FROM eclipse-temurin:21-jre-alpine
 WORKDIR /
 
 # Copy the application JAR file
-COPY build/libs/ms-booking-0.0.1-SNAPSHOT.jar app.jar
+COPY build/libs/ms-booking-0.1.jar app.jar
 
 # Expose the application port
 EXPOSE 8081
