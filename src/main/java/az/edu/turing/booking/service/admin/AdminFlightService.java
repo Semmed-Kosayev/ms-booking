@@ -71,6 +71,8 @@ public class AdminFlightService {
         }
 
         FlightEntity flight = mapper.toEntity(createFlightRequest);
+        flight.getFlightDetail().setCreatedBy(adminId);
+        flight.getFlightDetail().setUpdatedBy(adminId);
         flight.setUpdatedBy(adminId);
         flight.setCreatedBy(adminId);
         FlightEntity savedFlight = flightRepository.save(flight);
